@@ -125,24 +125,19 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
             helperText={`${form.content.length} / 1000`} slotProps={{ htmlInput: { maxLength: 1000 } }}
           />
 
-          <Box sx={{ p: 2, border: '1px dashed #555555', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Box sx={{ color: '#000070', fontWeight: 700, fontSize: '0.9rem' }}>🙈 나는 이런 사람이래예 (선택)</Box>
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-              <TextField select size='small' label='🏠 사는 곳 (시/도)' value={form.region} onChange={handleChange('region')} sx={{ flex: 1, minWidth: 140 }}>
-                <MenuItem value=''>안 밝힐래예</MenuItem>
-                {REGIONS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
-              </TextField>
-              <TextField select size='small' label='🎂 나이대' value={form.ageGroup} onChange={handleChange('ageGroup')} sx={{ flex: 1, minWidth: 140 }}>
-                <MenuItem value=''>안 밝힐래예</MenuItem>
-                {AGE_GROUPS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
-              </TextField>
-            </Box>
-            <FormControlLabel
-              disabled={!hasInfo}
-              control={<Checkbox checked={form.isHideInfo} onChange={(e) => setForm((prev) => ({ ...prev, isHideInfo: e.target.checked }))} />}
-              label='🤫 비밀~ (적어는 두되 방명록에는 숨길래예)'
-            />
-          </Box>
+          <TextField select size='small' label='🏠 사는 곳 - 시/도 (선택)' value={form.region} onChange={handleChange('region')}>
+            <MenuItem value=''>안 밝힐래예</MenuItem>
+            {REGIONS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+          </TextField>
+          <TextField select size='small' label='🎂 나이대 (선택)' value={form.ageGroup} onChange={handleChange('ageGroup')}>
+            <MenuItem value=''>안 밝힐래예</MenuItem>
+            {AGE_GROUPS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+          </TextField>
+          <FormControlLabel
+            disabled={!hasInfo}
+            control={<Checkbox checked={form.isHideInfo} onChange={(e) => setForm((prev) => ({ ...prev, isHideInfo: e.target.checked }))} />}
+            label='🤫 비밀~ (적어는 두되 방명록에는 숨길래예)'
+          />
 
           {profile ? (
             <FormControlLabel
