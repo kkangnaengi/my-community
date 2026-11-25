@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
+import BookmarkButton from '../components/board/bookmark-button.jsx';
 import CommentSection from '../components/board/comment-section.jsx';
+import ReportDialog from '../components/board/report-dialog.jsx';
 import RetroHeader from '../components/common/retro-header.jsx';
 import { useAuth } from '../hooks/use-auth.js';
 import { supabase } from '../lib/supabase.js';
@@ -24,6 +26,7 @@ function PostDetailPage() {
   const [post, setPost] = useState(null);
   const [likes, setLikes] = useState({ count: 0, mine: false });
   const [nav, setNav] = useState({ prev: null, next: null });
+  const [isReportOpen, setIsReportOpen] = useState(false);
   const viewedRef = useRef(null);
 
   const loadLikes = useCallback(async () => {
@@ -64,7 +67,7 @@ function PostDetailPage() {
   };
 
   const remove = async () => {
-    if (!window.confirm('게시글을 삭제할까요?')) return;
+    if (!window.confirm('이 글을 정말 지울까요? 지우면 되돌릴 수 없어예!')) return;
     await supabase.from('posts').delete().eq('id', postId);
     navigate('/');
   };
@@ -73,8 +76,8 @@ function PostDetailPage() {
     return (
       <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 } }}>
         <RetroHeader />
-        <Box sx={{ textAlign: 'center', py: 6 }}>게시글을 찾을 수 없습니더.</Box>
-        <Box sx={{ textAlign: 'center' }}><Button variant='outlined' onClick={() => navigate('/')}>목록으로</Button></Box>
+        <Box sx={{ textAlign: 'center', py: 6 }}>⚠ 404 NOT FOUND - 찾으시는 글이 없거나 지워졌습니더.</Box>
+        <Box sx={{ textAlign: 'center' }}><Button variant='outlined' onClick={() => navigate('/')}>◀ 목록으로 돌아가기</Button></Box>
       </Container>
     );
   }
@@ -84,13 +87,13 @@ function PostDetailPage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <Paper sx={{ p: { xs: 2, md: 3 } }}>
+      <Paper sx={{ p: { xs: 3, md: 4 } }}>
         <Box sx={{ color: 'text.secondary', fontSize: '0.85rem' }}>[{post.category}]</Box>
         <Box sx={{ fontSize: { xs: '1.3rem', md: '1.6rem' }, fontWeight: 700, color: 'secondary.main', lineHeight: 1.4, wordBreak: 'break-word' }}>
           {post.title}
         </Box>
         <Box sx={{ color: 'text.secondary', fontSize: '0.85rem', my: 1, pb: 1, borderBottom: '1px dashed', borderColor: 'divider' }}>
-          {post.author?.nickname} · {formatDate(post.created_at, true)} · 조회 {post.view_count}
+          올린이: {post.author?.nickname} · 날짜: {formatDate(post.created_at, true)} · 읽은 사람: {post.view_count}명
         </Box>
         {post.image_url && (
           <Box component='img' src={post.image_url} alt='첨부 이미지' sx={{ maxWidth: '100%', my: 2, border: '2px solid', borderColor: 'divider' }} />
@@ -99,23 +102,26 @@ function PostDetailPage() {
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 3 }}>
           <Button variant={likes.mine ? 'contained' : 'outlined'} color='secondary' disabled={!profile} onClick={toggleLike}>
-            ♥ 좋아요 {likes.count}
+            ♥ 추천 {likes.count}
           </Button>
+          <BookmarkButton postId={postId} />
+          {profile && post.user_id !== profile.id && <Button variant='outlined' color='inherit' onClick={() => setIsReportOpen(true)}>🚨 신고</Button>}
           <Box sx={{ flex: 1 }} />
-          {canEdit && <Button variant='outlined' onClick={() => navigate(`/write/${postId}`)}>수정</Button>}
-          {canEdit && <Button variant='outlined' color='error' onClick={remove}>삭제</Button>}
-          <Button variant='outlined' onClick={() => navigate('/')}>목록</Button>
+          {canEdit && <Button variant='outlined' onClick={() => navigate(`/write/${postId}`)}>✎ 고치기</Button>}
+          {canEdit && <Button variant='outlined' color='error' onClick={remove}>✕ 지우기</Button>}
+          <Button variant='outlined' onClick={() => navigate('/')}>◀ 목록</Button>
         </Box>
 
         <CommentSection postId={postId} />
+        {isReportOpen && <ReportDialog targetType='게시물' postId={postId} onClose={() => setIsReportOpen(false)} />}
 
         <Box sx={{ mt: 3, pt: 1, borderTop: '1px dashed', borderColor: 'divider', fontSize: '0.9rem', lineHeight: 1.8 }}>
           <Box>
-            ▲ 이전 글:{' '}
+            ▲ 윗글(이전):{' '}
             {nav.prev ? <Box component='a' href={`#/posts/${nav.prev.id}`} sx={{ color: 'primary.main' }}>{nav.prev.title}</Box> : '없음'}
           </Box>
           <Box>
-            ▼ 다음 글:{' '}
+            ▼ 아랫글(다음):{' '}
             {nav.next ? <Box component='a' href={`#/posts/${nav.next.id}`} sx={{ color: 'primary.main' }}>{nav.next.title}</Box> : '없음'}
           </Box>
         </Box>

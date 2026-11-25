@@ -77,20 +77,20 @@ function BoardPage() {
 
       <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
         <Box component='form' onSubmit={handleSearch} sx={{ display: 'flex', gap: 1, flex: 1, minWidth: 220 }}>
-          <TextField size='small' fullWidth placeholder='제목 검색' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-          <Button type='submit' variant='outlined'>검색</Button>
+          <TextField size='small' fullWidth placeholder='🔍 제목으로 찾기 (예: 정모, 번개)' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+          <Button type='submit' variant='outlined'>찾기 ▶</Button>
         </Box>
-        <Button variant='contained' onClick={() => navigate('/write')}>글쓰기</Button>
+        <Button variant='contained' onClick={() => navigate('/write')}>✎ 글쓰기</Button>
       </Box>
 
       <Paper sx={{ overflowX: 'auto' }}>
         <Table size='small'>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: 90 }}>분류</TableCell>
-              <TableCell>제목</TableCell>
-              <TableCell sx={{ width: 110, display: { xs: 'none', sm: 'table-cell' } }}>작성자</TableCell>
-              <TableCell sx={{ width: 80 }}>작성일</TableCell>
+              <TableCell sx={{ width: 90 }}>[분류]</TableCell>
+              <TableCell>[제 목]</TableCell>
+              <TableCell sx={{ width: 110, display: { xs: 'none', sm: 'table-cell' } }}>[올린이]</TableCell>
+              <TableCell sx={{ width: 80 }}>[날짜]</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -111,7 +111,7 @@ function BoardPage() {
             ))}
             {posts.length === 0 && (
               <TableRow>
-                <TableCell colSpan={4} sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>게시물이 없습니더.</TableCell>
+                <TableCell colSpan={4} sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>📭 아직 올라온 글이 없습니더. 첫 글의 주인공이 되어 보이소!</TableCell>
               </TableRow>
             )}
           </TableBody>

@@ -15,6 +15,14 @@ import { supabase } from '../lib/supabase.js';
 
 const CATEGORIES = ['모임 모집', '작업 인증', '자유게시판'];
 
+/** 카테고리별 내용 입력창 안내 문구 */
+const CONTENT_HINTS = {
+  공지사항: '☎ 삐삐~ 전 회원 주목! 알릴 소식을 또박또박 남겨주세요',
+  '모임 모집': '📟 몇 시에 어디서 볼까? 일정·장소·준비물 적고 삐삐 쳐요!',
+  '작업 인증': '💾 오늘 저장한 작업물 자랑 타임! 한 일과 느낀 점을 적어주세요',
+  자유게시판: '💬 PC통신 감성으로 수다 한 판~ 하고 싶은 말 다 적어요',
+};
+
 /**
  * 게시물 작성 / 수정 페이지 (/write, /write/:id)
  *
@@ -76,14 +84,14 @@ function PostWritePage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <Paper component='form' onSubmit={handleSubmit} sx={{ p: { xs: 2, md: 3 }, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>{id ? '게시글 수정' : '새 글 쓰기'}</Box>
+      <Paper component='form' onSubmit={handleSubmit} sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>{id ? '✎ 글 고쳐쓰기 (EDIT MODE)' : '✎ 새 글 쓰기 (NEW POST)'}</Box>
         <TextField select size='small' label='카테고리' value={form.category} onChange={handleChange('category')}>
           {categories.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
         </TextField>
         <TextField size='small' label='제목' required value={form.title} onChange={handleChange('title')} />
         <TextField
-          label='내용 (모임 일정, 장소, 준비물 등을 적어주세요)'
+          label={`내용 (${CONTENT_HINTS[form.category] ?? '내용을 적어주세요'})`}
           required
           multiline
           minRows={8}
@@ -92,7 +100,7 @@ function PostWritePage() {
         />
         <Box>
           <Button component='label' variant='outlined' size='small'>
-            사진 첨부
+            📎 사진 첨부 (디스켓 넣기)
             <input hidden type='file' accept='image/*' onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
           </Button>
           <Box component='span' sx={{ ml: 1, color: 'text.secondary', fontSize: '0.85rem' }}>
@@ -107,8 +115,10 @@ function PostWritePage() {
         )}
         {error && <Alert severity='error'>{error}</Alert>}
         <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-          <Button variant='outlined' onClick={() => navigate(-1)}>취소</Button>
-          <Button type='submit' variant='contained' disabled={isBusy}>{id ? '수정 완료' : '등록'}</Button>
+          <Button variant='outlined' onClick={() => navigate(-1)}>◀ 뒤로가기</Button>
+          <Button type='submit' variant='contained' disabled={isBusy}>
+            {isBusy ? '전송 중...' : id ? '저장하기 ▶' : '게시판에 올리기 ▶'}
+          </Button>
         </Box>
       </Paper>
     </Container>

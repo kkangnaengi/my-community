@@ -66,13 +66,13 @@ function LoginPage() {
           약속 잡고 모여서 작업하고, 공부하고, 수다 떠는 모임
         </Box>
         <Box sx={{ color: 'primary.main', mb: 2, lineHeight: 1.7, borderTop: '1px dashed', borderBottom: '1px dashed', py: 1 }}>
-          <Box>반갑습니데이! 와글와구락부에 오신 걸 환영합니더.</Box>
-          <Box>▶ 현재 접속 중인 회원 {String(online).padStart(2, '0')}명</Box>
+          <Box>삐――――― 지직... 접속 성공! 와글와구락부에 오신 걸 환영합니데이~</Box>
+          <Box>▶ 지금 접속 중인 회원: {String(online).padStart(2, '0')}명 (모뎀 소리 시끄러버예)</Box>
           <Box>▶ 오늘의 공지: {notice}</Box>
-          <Box>▶ 현재 와글와구락부 접속 가능!</Box>
+          <Box>▶ ID와 비밀번호를 넣고 [접속하기]를 눌러 주이소!</Box>
         </Box>
 
-        <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <TextField label='회원 ID (이메일)' type='email' size='small' required value={form.email} onChange={handleChange('email')} />
           <TextField label='비밀번호' type='password' size='small' required slotProps={{ htmlInput: { minLength: 6 } }} value={form.password} onChange={handleChange('password')} />
           {isSignup && (
@@ -83,10 +83,10 @@ function LoginPage() {
           )}
           {message && <Alert severity={message.severity}>{message.text}</Alert>}
           <Button type='submit' variant='contained' disabled={isBusy}>
-            {isSignup ? '가입하기' : '접속하기'}
+            {isBusy ? '모뎀 연결 중... 삐~ 지지직' : isSignup ? '회원증 발급받기 ▶' : '접속하기 ▶'}
           </Button>
           <Button variant='outlined' color='secondary' onClick={() => { setIsSignup((v) => !v); setMessage(null); }}>
-            {isSignup ? '로그인 화면으로' : '신규 회원 가입하기'}
+            {isSignup ? '◀ 접속 화면으로' : '신규 회원 가입하기 (무료!)'}
           </Button>
         </Box>
       </Paper>

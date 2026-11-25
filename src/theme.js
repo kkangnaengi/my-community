@@ -37,6 +37,7 @@ const theme = createTheme({
       styleOverrides: { root: { backgroundImage: 'none', border: '2px solid #3a7bd5' } },
     },
     MuiChip: { styleOverrides: { root: { borderRadius: 0 } } },
+    MuiTableCell: { styleOverrides: { root: { padding: '14px 16px' } } },
   },
 });
 

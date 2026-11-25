@@ -36,9 +36,7 @@ function AuthProvider({ children }) {
     if (!userId) return;
     let isActive = true;
     supabase
-      .from('users')
-      .select('id, nickname, profile_image, role, status')
-      .eq('auth_id', userId)
+      .rpc('get_my_profile')
       .maybeSingle()
       .then(({ data }) => {
         if (!isActive) return;
