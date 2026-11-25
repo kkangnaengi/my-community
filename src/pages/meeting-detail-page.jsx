@@ -44,7 +44,7 @@ function MeetingDetailPage() {
   }, [id]);
 
   const remove = async () => {
-    if (!window.confirm('이 모임을 정말 지울까요?')) return;
+    if (!window.confirm('이 모임을 정말 지울까예?')) return;
     const { error: deleteError } = await supabase.from('meetings').delete().eq('id', id);
     if (deleteError) setError('투표·출석 기록이 있어서 지울 수 없어예. 모집 상태를 "취소"로 바꿔 주이소.');
     else navigate('/meetings');

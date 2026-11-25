@@ -48,7 +48,7 @@ function AdminReportPage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <RetroTitle title='신고 관리 (관리자)' />
+      <RetroTitle title='🚨 신고센터 (운영진 전용)' />
       <Paper sx={{ p: { xs: 2, md: 3 } }}>
         {reports.length === 0 && <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>📭 접수된 신고가 없어예. 평화로운 구락부네예~</Box>}
         {reports.map((r) => {

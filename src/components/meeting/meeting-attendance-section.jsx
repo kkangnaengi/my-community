@@ -90,7 +90,7 @@ function MeetingAttendanceSection({ meeting }) {
       ))}
       {profile && !mine && (
         <Box component='form' onSubmit={checkIn} sx={{ display: 'flex', gap: 1, mt: 1.5 }}>
-          <TextField size='small' fullWidth placeholder='출석 인증 한마디 (선택, 예: 카페 도착!)' value={proof} onChange={(e) => setProof(e.target.value)} />
+          <TextField size='small' fullWidth placeholder='출석 한마디 (선택, 예: 카페 도착했심더!)' value={proof} onChange={(e) => setProof(e.target.value)} />
           <Button type='submit' variant='contained'>출석 도장 ▶</Button>
         </Box>
       )}

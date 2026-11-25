@@ -51,10 +51,10 @@ function ReportDialog({ targetType, postId = null, commentId = null, onClose }) 
       <DialogTitle sx={{ color: 'secondary.main' }}>🚨 {targetType} 신고하기</DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pt: 1 }}>
-          <TextField select size='small' label='신고 사유' value={reason} onChange={(e) => setReason(e.target.value)}>
+          <TextField select size='small' label='무슨 일이래예? (신고 사유)' value={reason} onChange={(e) => setReason(e.target.value)}>
             {REASONS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
           </TextField>
-          <TextField size='small' label='자세한 내용 (선택)' multiline minRows={3} value={detail} onChange={(e) => setDetail(e.target.value)} />
+          <TextField size='small' label='자세히 말씀해 주이소 (선택)' multiline minRows={3} value={detail} onChange={(e) => setDetail(e.target.value)} />
           {result && <Alert severity={result.severity}>{result.text}</Alert>}
         </Box>
       </DialogContent>

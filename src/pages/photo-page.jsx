@@ -44,7 +44,7 @@ function PhotoPage() {
   }, [load]);
 
   const remove = async (photo) => {
-    if (!window.confirm('이 사진을 사진첩에서 뺄까요?')) return;
+    if (!window.confirm('이 사진을 사진첩에서 뺄까예?')) return;
     await supabase.from('photos').delete().eq('id', photo.id);
     setSelected(null);
     load();

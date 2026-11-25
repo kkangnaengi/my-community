@@ -96,7 +96,7 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
           <Box sx={{ color: '#000070', fontWeight: 700 }}>
             ✎ 작성자: {authorName}{profile ? '' : ' (비회원)'}
           </Box>
-          <TextField select size='small' label='관련 모임 (선택)' value={form.meetingId} onChange={handleChange('meetingId')}>
+          <TextField select size='small' label='어느 모임 사람이세예? (선택)' value={form.meetingId} onChange={handleChange('meetingId')}>
             <MenuItem value=''>선택 안 함 (비밀~)</MenuItem>
             {meetings.map((m) => <MenuItem key={m.id} value={m.id}>{m.title}</MenuItem>)}
           </TextField>
@@ -107,18 +107,18 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
           {profile ? (
             <FormControlLabel
               control={<Checkbox checked={isSharePager} onChange={(e) => setIsSharePager(e.target.checked)} />}
-              label='내 삐삐번호를 메모에 보여주기'
+              label='내 삐삐번호도 메모에 띄워주이소'
             />
           ) : (
             <TextField
-              size='small' label='삐삐번호 (선택)' value={form.pager} onChange={handleChange('pager')}
-              helperText='숫자와 - 만 쓸 수 있어요. 적으면 메모에 삐삐 모양으로 표시돼요.'
+              size='small' label='삐삐번호 (있으면 적어주이소)' value={form.pager} onChange={handleChange('pager')}
+              helperText='숫자와 - 만 적을 수 있어예. 적으면 메모에 삐삐 그림으로 뜹니데이!'
               slotProps={{ htmlInput: { maxLength: 20, inputMode: 'tel', pattern: '[0-9 \\-]*' } }}
             />
           )}
           <TextField
-            size='small' type='password' label='비밀번호 (4자 이상)' required value={form.password} onChange={handleChange('password')}
-            helperText='메모를 고치거나 지울 때 필요해요. 꼭 기억해 주세요!'
+            size='small' type='password' label='비밀번호 (4자 이상, 잊어버리면 큰일나예)' required value={form.password} onChange={handleChange('password')}
+            helperText='메모를 고치거나 뗄 때 필요하니더. 꼭 기억해 두이소!'
             slotProps={{ htmlInput: { minLength: 4 } }}
           />
           {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}

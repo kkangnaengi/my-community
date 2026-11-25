@@ -90,7 +90,7 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
   const isEdited = memo.updated_at && memo.updated_at !== memo.created_at;
   const renderPasswordField = (isRequired) => (
     <TextField
-      size='small' type='password' label={isRequired ? '비밀번호' : '비밀번호 (관리자는 비워도 돼요)'} required={isRequired}
+      size='small' type='password' label={isRequired ? '비밀번호' : '비밀번호 (운영진은 비워도 됩니데이)'} required={isRequired}
       autoFocus value={password} onChange={(e) => setPassword(e.target.value)} sx={{ mt: 2 }} fullWidth
     />
   );
@@ -122,7 +122,7 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
 
         {mode === 'delete' && (
           <Box component='form' id='guestbook-delete-form' onSubmit={handleDelete}>
-            <Box sx={{ mt: 2, color: '#b71c1c', fontWeight: 700 }}>정말 이 메모를 뗄까요?</Box>
+            <Box sx={{ mt: 2, color: '#b71c1c', fontWeight: 700 }}>정말 이 메모를 떼 버릴까예?</Box>
             {renderPasswordField(!isAdmin)}
           </Box>
         )}
@@ -134,7 +134,7 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
             </Box>
             <Box sx={{ flex: 1, minWidth: 160 }}>
               <Box sx={{ fontSize: '0.85rem', color: '#555555', mb: 1 }}>
-                {memo.pager_number ? `삐삐번호 ${memo.pager_number}` : '삐삐번호를 안 남겼어요'}
+                {memo.pager_number ? `삐삐번호 ${memo.pager_number}` : '삐삐번호를 안 남기셨어예'}
               </Box>
               <Button size='small' variant='contained' disabled={isBusy} onClick={handleSendPager} sx={NAVY_BUTTON_SX}>
                 📟 삐삐 알림 보내기

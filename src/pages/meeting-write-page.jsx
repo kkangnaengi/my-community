@@ -93,15 +93,15 @@ function MeetingWritePage() {
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
       <Paper component='form' onSubmit={handleSubmit} sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
-        <RetroTitle title={id ? '모임 고치기' : '새 모임 만들기'} />
+        <RetroTitle title={id ? '모임 고치기' : '새 모임 열기'} />
         <TextField size='small' label='모임 이름' required value={form.title} onChange={handleChange('title')} />
-        <TextField size='small' label='모임 소개 (무슨 모임인지 알려주세요)' multiline minRows={4} value={form.description} onChange={handleChange('description')} />
+        <TextField size='small' label='모임 소개 (무슨 모임인지 알려 주이소)' multiline minRows={4} value={form.description} onChange={handleChange('description')} />
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField size='small' type='date' label='날짜' required slotProps={{ inputLabel: { shrink: true } }} value={form.meeting_date} onChange={handleChange('meeting_date')} sx={{ flex: 1, minWidth: 150 }} />
           <TextField size='small' type='time' label='시작 시간' slotProps={{ inputLabel: { shrink: true } }} value={form.start_time} onChange={handleChange('start_time')} sx={{ flex: 1, minWidth: 120 }} />
           <TextField size='small' type='time' label='끝나는 시간' slotProps={{ inputLabel: { shrink: true } }} value={form.end_time} onChange={handleChange('end_time')} sx={{ flex: 1, minWidth: 120 }} />
         </Box>
-        <TextField size='small' label='장소 이름 (비워두면 투표로 정해요)' value={form.place_name} onChange={handleChange('place_name')} />
+        <TextField size='small' label='장소 이름 (비워두면 투표로 정합니데이)' value={form.place_name} onChange={handleChange('place_name')} />
         <TextField size='small' label='장소 주소' value={form.place_address} onChange={handleChange('place_address')} />
         <TextField size='small' label='예약 링크 (URL)' value={form.reservation_url} onChange={handleChange('reservation_url')} />
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>

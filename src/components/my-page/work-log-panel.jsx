@@ -41,7 +41,7 @@ function WorkLogPanel() {
   }, [load]);
 
   const remove = async (id) => {
-    if (!window.confirm('이 일지를 지울까요?')) return;
+    if (!window.confirm('이 일지를 지울까예?')) return;
     await supabase.from('work_logs').delete().eq('id', id);
     load();
   };

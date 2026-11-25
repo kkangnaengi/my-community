@@ -71,7 +71,7 @@ function WorkLogForm({ log = null, onSaved, onCancel }) {
   return (
     <Paper component='form' onSubmit={handleSubmit} sx={{ p: 3, mb: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>{log ? '✎ 일지 고치기' : '💾 오늘의 작업 저장'}</Box>
-      <TextField size='small' label='무슨 작업을 했나요?' required value={form.title} onChange={handleChange('title')} />
+      <TextField size='small' label='오늘은 무슨 작업을 했는교?' required value={form.title} onChange={handleChange('title')} />
       <TextField size='small' label='작업 내용 (선택)' multiline minRows={3} value={form.content} onChange={handleChange('content')} />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <TextField size='small' type='date' label='작업 날짜' required slotProps={{ inputLabel: { shrink: true } }} value={form.work_date} onChange={handleChange('work_date')} sx={{ flex: 1, minWidth: 150 }} />

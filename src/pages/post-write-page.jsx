@@ -86,7 +86,7 @@ function PostWritePage() {
       <RetroHeader />
       <Paper component='form' onSubmit={handleSubmit} sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
         <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>{id ? '✎ 글 고쳐쓰기 (EDIT MODE)' : '✎ 새 글 쓰기 (NEW POST)'}</Box>
-        <TextField select size='small' label='카테고리' value={form.category} onChange={handleChange('category')}>
+        <TextField select size='small' label='게시판 종류' value={form.category} onChange={handleChange('category')}>
           {categories.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
         </TextField>
         <TextField size='small' label='제목' required value={form.title} onChange={handleChange('title')} />
@@ -110,7 +110,7 @@ function PostWritePage() {
         {isAdmin && (
           <FormControlLabel
             control={<Checkbox checked={form.is_pinned} onChange={(e) => setForm((prev) => ({ ...prev, is_pinned: e.target.checked }))} />}
-            label='상단 고정'
+            label='맨 위에 붙여두기 (상단 고정)'
           />
         )}
         {error && <Alert severity='error'>{error}</Alert>}

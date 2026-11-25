@@ -67,8 +67,8 @@ function PhotoUploadForm({ onUploaded, onCancel }) {
     <Paper component='form' onSubmit={handleSubmit} sx={{ p: 3, mb: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>💾 사진 올리기</Box>
       <TextField size='small' label='사진 제목' required value={form.title} onChange={handleChange('title')} />
-      <TextField size='small' label='사진 설명 (선택)' value={form.description} onChange={handleChange('description')} />
-      <TextField select size='small' label='어느 모임 사진인가요? (선택)' value={form.meeting_id} onChange={handleChange('meeting_id')}>
+      <TextField size='small' label='사진 한마디 (선택)' value={form.description} onChange={handleChange('description')} />
+      <TextField select size='small' label='어느 모임 사진이래예? (선택)' value={form.meeting_id} onChange={handleChange('meeting_id')}>
         <MenuItem value=''>선택 안 함</MenuItem>
         {meetings.map((m) => <MenuItem key={m.id} value={m.id}>{m.title}</MenuItem>)}
       </TextField>

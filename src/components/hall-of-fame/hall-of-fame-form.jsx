@@ -58,7 +58,7 @@ function HallOfFameForm({ onSaved, onCancel }) {
   return (
     <Paper component='form' onSubmit={handleSubmit} sx={{ p: 3, mb: 3, display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>👑 수상자 등록 (관리자)</Box>
-      <TextField select size='small' label='수상 회원' required value={form.user_id} onChange={handleChange('user_id')}>
+      <TextField select size='small' label='상 받을 회원' required value={form.user_id} onChange={handleChange('user_id')}>
         {members.map((m) => <MenuItem key={m.id} value={m.id}>{m.nickname}</MenuItem>)}
       </TextField>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -67,7 +67,7 @@ function HallOfFameForm({ onSaved, onCancel }) {
         </TextField>
         <TextField size='small' type='month' label='수상 월' required slotProps={{ inputLabel: { shrink: true } }} value={form.award_month} onChange={handleChange('award_month')} sx={{ flex: 1, minWidth: 140 }} />
       </Box>
-      <TextField size='small' label='수상 이유 (선택)' value={form.reason} onChange={handleChange('reason')} />
+      <TextField size='small' label='왜 상을 주나예? (선택)' value={form.reason} onChange={handleChange('reason')} />
       {error && <Alert severity='error'>{error}</Alert>}
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
         <Button variant='outlined' onClick={onCancel}>그만두기</Button>

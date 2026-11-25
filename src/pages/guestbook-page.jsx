@@ -13,7 +13,7 @@ function GuestbookPage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <RetroTitle title='방명록' />
+      <RetroTitle title='방명록 (추억의 낙서장)' />
       <GuestbookBoard />
     </Container>
   );

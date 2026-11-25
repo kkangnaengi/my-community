@@ -71,30 +71,30 @@ function LoginPage() {
           <Box>삐――――― 지직... 접속 성공! 와글와구락부에 오신 걸 환영합니데이~</Box>
           <Box>▶ 지금 접속 중인 회원: {String(online).padStart(2, '0')}명 (모뎀 소리 시끄러버예)</Box>
           <Box>▶ 오늘의 공지: {notice}</Box>
-          <Box>▶ ID와 비밀번호를 넣고 [접속하기]를 눌러 주이소!</Box>
+          <Box>▶ ID와 비밀 암호를 넣고 [삐~ 지지직 접속!]을 눌러 주이소!</Box>
         </Box>
 
         {isGuestMode ? (
           <GuestEntryForm onCancel={() => setIsGuestMode(false)} />
         ) : (
         <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <TextField label='회원 ID (이메일)' type='email' size='small' required value={form.email} onChange={handleChange('email')} />
-          <TextField label='비밀번호' type='password' size='small' required slotProps={{ htmlInput: { minLength: 6 } }} value={form.password} onChange={handleChange('password')} />
+          <TextField label='🆔 접속 ID (이메일 주소를 쳐주이소)' type='email' size='small' required value={form.email} onChange={handleChange('email')} />
+          <TextField label='🔑 비밀 암호 (PASSWORD, 6자 이상)' type='password' size='small' required slotProps={{ htmlInput: { minLength: 6 } }} value={form.password} onChange={handleChange('password')} />
           {isSignup && (
             <>
-              <TextField label='닉네임' size='small' required value={form.nickname} onChange={handleChange('nickname')} />
-              <TextField label='삐삐번호' size='small' value={form.pager} onChange={handleChange('pager')} />
+              <TextField label='💬 대화명 (구락부에서 불릴 이름)' size='small' required value={form.nickname} onChange={handleChange('nickname')} />
+              <TextField label='📟 삐삐번호 (없으면 비워두이소)' size='small' value={form.pager} onChange={handleChange('pager')} />
             </>
           )}
           {message && <Alert severity={message.severity}>{message.text}</Alert>}
           <Button type='submit' variant='contained' disabled={isBusy}>
-            {isBusy ? '모뎀 연결 중... 삐~ 지지직' : isSignup ? '회원증 발급받기 ▶' : '접속하기 ▶'}
+            {isBusy ? '📡 모뎀 연결 중... 띠리리리~' : isSignup ? '🪪 회원증 발급받기 ▶' : '📞 삐~ 지지직 접속! ▶'}
           </Button>
           <Button variant='outlined' color='secondary' onClick={() => { setIsSignup((v) => !v); setMessage(null); }}>
             {isSignup ? '◀ 접속 화면으로' : '신규 회원 가입하기 (무료!)'}
           </Button>
           <Button variant='outlined' onClick={() => { setIsGuestMode(true); setMessage(null); }}>
-            👤 비회원으로 입장하기 (방명록만 쓸 수 있어요)
+            👤 비회원으로 구경하기 (방명록만 쓸 수 있어예)
           </Button>
         </Box>
         )}

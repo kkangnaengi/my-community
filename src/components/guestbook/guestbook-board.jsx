@@ -44,7 +44,7 @@ function GuestbookBoard() {
         <Box>
           <Box sx={{ color: '#ffff55', fontWeight: 700, fontSize: { xs: '1.1rem', md: '1.4rem' } }}>★ 방명록 칠판 ★</Box>
           <Box sx={{ color: '#9fdfff', fontSize: '0.85rem', mt: 0.5 }}>
-            ▶ 다녀간 흔적을 메모로 남겨 주세요! 메모를 누르면 전체 내용을 볼 수 있어요.
+            ▶ 다녀간 흔적을 메모로 남기고 가이소! 메모를 누르면 전체 내용이 나옵니데이.
           </Box>
         </Box>
         <Button variant='contained' onClick={() => setIsWriteOpen(true)}>📌 메모 붙이기</Button>
@@ -69,7 +69,7 @@ function GuestbookBoard() {
         {!isLoading && errorMessage && <Box sx={{ alignSelf: 'center', color: '#ff9b9b' }}>⚠ {errorMessage}</Box>}
         {!isLoading && !errorMessage && items.length === 0 && (
           <Box sx={{ alignSelf: 'center', textAlign: 'center', lineHeight: 1.8 }}>
-            📭 칠판이 텅 비어 있어요.<br />첫 번째 메모의 주인공이 되어 보세요!
+            📭 칠판이 텅 비어 있어예.<br />첫 번째 메모의 주인공이 되어 보이소!
           </Box>
         )}
         {items.map((memo) => <GuestbookMemo key={memo.id} memo={memo} onOpen={setSelected} />)}

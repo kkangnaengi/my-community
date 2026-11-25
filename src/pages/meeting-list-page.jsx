@@ -40,7 +40,7 @@ function MeetingListPage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <RetroTitle title='모임 게시판'>
+      <RetroTitle title='모임 광장'>
         {!isGuest && <Button variant='contained' onClick={() => navigate('/meetings/write')}>✎ 모임 만들기</Button>}
       </RetroTitle>
       <Paper sx={{ p: { xs: 2, md: 3 } }}>

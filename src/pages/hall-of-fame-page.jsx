@@ -37,7 +37,7 @@ function HallOfFamePage() {
   }, [load]);
 
   const remove = async (id) => {
-    if (!window.confirm('이 수상 기록을 지울까요?')) return;
+    if (!window.confirm('이 수상 기록을 지울까예?')) return;
     await supabase.from('hall_of_fame').delete().eq('id', id);
     load();
   };

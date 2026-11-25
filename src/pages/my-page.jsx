@@ -30,7 +30,7 @@ function MyPage() {
   return (
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
-      <RetroTitle title={`${profile?.nickname ?? ''} 님의 마이페이지`} />
+      <RetroTitle title={`${profile?.nickname ?? ''} 님의 나만의 방 (마이페이지)`} />
       <Tabs
         value={currentTab}
         onChange={(_e, value) => setSearchParams({ tab: value })}

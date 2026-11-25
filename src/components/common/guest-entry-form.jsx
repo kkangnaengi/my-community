@@ -44,17 +44,17 @@ function GuestEntryForm({ onCancel }) {
     <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Box sx={{ color: 'secondary.main', fontWeight: 700 }}>👤 비회원으로 입장하기</Box>
       <Box sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.7 }}>
-        ▶ 모든 화면을 볼 수 있어요.<br />
-        ▶ 대신 글·댓글·모임 같은 건 못 쓰고, <Box component='span' sx={{ color: 'primary.main' }}>방명록만</Box> 남길 수 있어요.<br />
-        ▶ 이 브라우저에 기억되니까 다음에 또 들어올 수 있어요.
+        ▶ 구락부 구경은 마음껏 하셔도 됩니데이.<br />
+        ▶ 대신 글·댓글·모임은 못 쓰고, <Box component='span' sx={{ color: 'primary.main' }}>방명록만</Box> 남길 수 있어예.<br />
+        ▶ 이 컴퓨터가 기억해 주니까 다음에 또 들어올 수 있어예~
       </Box>
       <TextField
-        label='닉네임' size='small' required value={form.nickname} onChange={handleChange('nickname')}
+        label='💬 대화명 (구락부에서 불릴 이름)' size='small' required value={form.nickname} onChange={handleChange('nickname')}
         slotProps={{ htmlInput: { maxLength: 20 } }}
       />
       <TextField
-        label='삐삐번호 (선택)' size='small' value={form.pager} onChange={handleChange('pager')}
-        helperText='숫자와 - 만 쓸 수 있어요. 방명록에 삐삐 모양으로 보여줄 수 있어요.'
+        label='📟 삐삐번호 (있으면 적어주이소)' size='small' value={form.pager} onChange={handleChange('pager')}
+        helperText='숫자와 - 만 적을 수 있어예. 방명록에 삐삐 그림으로 띄워 드릴게예!'
         slotProps={{ htmlInput: { maxLength: 20, inputMode: 'tel', pattern: '[0-9 \\-]*' } }}
       />
       {errorMessage && <Alert severity='error'>{errorMessage}</Alert>}

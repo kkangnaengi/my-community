@@ -16,7 +16,7 @@ export function useGuestbooks() {
       .select('id, nickname, content, pager_number, meeting_id, created_at, updated_at, meeting:meetings(title)')
       .order('created_at', { ascending: false })
       .limit(40);
-    if (error) setErrorMessage('방명록을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.');
+    if (error) setErrorMessage('방명록을 불러오지 못했어예. 잠시 후 다시 해 보이소!');
     else {
       setItems(data ?? []);
       setErrorMessage(null);
