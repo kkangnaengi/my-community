@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,6 +31,20 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
   const [isBusy, setIsBusy] = useState(false);
+  const [info, setInfo] = useState(null);
+  const memoId = memo?.id;
+
+  // 추가 정보(사는 곳/나이대)는 숨긴 메모면 서버가 값을 주지 않음
+  useEffect(() => {
+    if (!memoId) return undefined;
+    let isActive = true;
+    supabase.rpc('get_guestbook_info', { p_id: memoId }).then(({ data }) => {
+      if (isActive) setInfo(data?.[0] ?? null);
+    });
+    return () => {
+      isActive = false;
+    };
+  }, [memoId]);
 
   const resetState = () => {
     setMode('view');
@@ -105,6 +119,12 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
         <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#000070' }}>
           🏠 {memo.meeting?.title ?? getNoMeetingPhrase(memo.id)}
         </Box>
+        {info?.is_hidden && <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#555555' }}>🤫 사는 곳·나이대: 비밀~ (본인만 알아예)</Box>}
+        {(info?.region || info?.age_group) && (
+          <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#555555' }}>
+            {info.region ? `🏠 사는 곳: ${info.region}` : ''}{info.region && info.age_group ? ' · ' : ''}{info.age_group ? `🎂 나이대: ${info.age_group}` : ''}
+          </Box>
+        )}
 
         {mode === 'edit' ? (
           <Box component='form' id='guestbook-edit-form' onSubmit={handleUpdate}>

@@ -69,7 +69,7 @@ function LoginPage() {
         </Box>
         <Box sx={{ color: 'primary.main', mb: 2, lineHeight: 1.7, borderTop: '1px dashed', borderBottom: '1px dashed', py: 1 }}>
           <Box>삐――――― 지직... 접속 성공! 와글와구락부에 오신 걸 환영합니데이~</Box>
-          <Box>▶ 지금 접속 중인 회원: {String(online).padStart(2, '0')}명 (모뎀 소리 시끄러버예)</Box>
+          <Box>▶ 지금 접속 중인 회원: {online}명 (모뎀 소리 시끄러버예)</Box>
           <Box>▶ 오늘의 공지: {notice}</Box>
           <Box>▶ ID와 비밀 암호를 넣고 [삐~ 지지직 접속!]을 눌러 주이소!</Box>
         </Box>

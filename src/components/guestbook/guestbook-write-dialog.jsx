@@ -12,7 +12,18 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { useAuth } from '../../hooks/use-auth.js';
 import { supabase } from '../../lib/supabase.js';
-import { MEMO_DIALOG_PAPER_SX, NAVY_BUTTON_SX } from '../../utils/guestbook-style.js';
+import { AGE_GROUPS, MEMO_DIALOG_PAPER_SX, NAVY_BUTTON_SX, REGIONS } from '../../utils/guestbook-style.js';
+
+/** 쓰기 창 입력값의 처음 상태 (비회원은 등록해 둔 삐삐번호를 미리 채움) */
+const makeEmptyForm = (guest) => ({
+  meetingId: '',
+  content: '',
+  pager: guest?.pager_number ?? '',
+  password: '',
+  region: '',
+  ageGroup: '',
+  isHideInfo: false,
+});
 
 /**
  * 방명록 메모지 쓰기 창 (회원 / 비회원 모두 작성 가능)
@@ -28,7 +39,7 @@ import { MEMO_DIALOG_PAPER_SX, NAVY_BUTTON_SX } from '../../utils/guestbook-styl
 function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
   const { profile, guest } = useAuth();
   const authorName = profile?.nickname ?? guest?.nickname ?? '';
-  const [form, setForm] = useState({ meetingId: '', content: '', pager: guest?.pager_number ?? '', password: '' });
+  const [form, setForm] = useState(() => makeEmptyForm(guest));
   const [isSharePager, setIsSharePager] = useState(false);
   const [meetings, setMeetings] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -47,7 +58,7 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
   const handleChange = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
   const handleClose = () => {
-    setForm({ meetingId: '', content: '', pager: guest?.pager_number ?? '', password: '' });
+    setForm(makeEmptyForm(guest));
     setIsSharePager(false);
     setErrorMessage(null);
     onClose();
@@ -58,12 +69,18 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
     setIsBusy(true);
     setErrorMessage(null);
     const meetingId = form.meetingId === '' ? null : Number(form.meetingId);
+    const extra = {
+      p_region: form.region === '' ? null : form.region,
+      p_age_group: form.ageGroup === '' ? null : form.ageGroup,
+      p_hide_info: form.isHideInfo,
+    };
     const { error } = profile
       ? await supabase.rpc('create_guestbook', {
         p_meeting_id: meetingId,
         p_content: form.content,
         p_password: form.password,
         p_share_my_pager: isSharePager,
+        ...extra,
       })
       : await supabase.rpc('create_guestbook_guest', {
         p_guest_id: guest.id,
@@ -72,6 +89,7 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
         p_content: form.content,
         p_password: form.password,
         p_pager: form.pager.trim() === '' ? null : form.pager.trim(),
+        ...extra,
       });
     setIsBusy(false);
     if (error) {
@@ -81,6 +99,8 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
     handleClose();
     onCreated();
   };
+
+  const hasInfo = form.region !== '' || form.ageGroup !== '';
 
   return (
     <Dialog
@@ -104,6 +124,26 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
             label='남기고 싶은 말' required multiline minRows={4} value={form.content} onChange={handleChange('content')}
             helperText={`${form.content.length} / 1000`} slotProps={{ htmlInput: { maxLength: 1000 } }}
           />
+
+          <Box sx={{ p: 2, border: '1px dashed #555555', display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ color: '#000070', fontWeight: 700, fontSize: '0.9rem' }}>🙈 나는 이런 사람이래예 (선택)</Box>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <TextField select size='small' label='🏠 사는 곳 (시/도)' value={form.region} onChange={handleChange('region')} sx={{ flex: 1, minWidth: 140 }}>
+                <MenuItem value=''>안 밝힐래예</MenuItem>
+                {REGIONS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+              </TextField>
+              <TextField select size='small' label='🎂 나이대' value={form.ageGroup} onChange={handleChange('ageGroup')} sx={{ flex: 1, minWidth: 140 }}>
+                <MenuItem value=''>안 밝힐래예</MenuItem>
+                {AGE_GROUPS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+              </TextField>
+            </Box>
+            <FormControlLabel
+              disabled={!hasInfo}
+              control={<Checkbox checked={form.isHideInfo} onChange={(e) => setForm((prev) => ({ ...prev, isHideInfo: e.target.checked }))} />}
+              label='🤫 비밀~ (적어는 두되 방명록에는 숨길래예)'
+            />
+          </Box>
+
           {profile ? (
             <FormControlLabel
               control={<Checkbox checked={isSharePager} onChange={(e) => setIsSharePager(e.target.checked)} />}
