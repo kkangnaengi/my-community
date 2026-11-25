@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import RetroHeader from '../components/common/retro-header.jsx';
 import RetroTitle from '../components/common/retro-title.jsx';
+import { useAuth } from '../hooks/use-auth.js';
 import { supabase } from '../lib/supabase.js';
 
 const STATUS_COLORS = { '모집 중': 'primary', '모집 완료': 'secondary', '모임 종료': 'default', 취소: 'error' };
@@ -19,6 +20,7 @@ const STATUS_COLORS = { '모집 중': 'primary', '모집 완료': 'secondary', '
  */
 function MeetingListPage() {
   const navigate = useNavigate();
+  const { isGuest } = useAuth();
   const [meetings, setMeetings] = useState([]);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function MeetingListPage() {
     <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
       <RetroHeader />
       <RetroTitle title='모임 게시판'>
-        <Button variant='contained' onClick={() => navigate('/meetings/write')}>✎ 모임 만들기</Button>
+        {!isGuest && <Button variant='contained' onClick={() => navigate('/meetings/write')}>✎ 모임 만들기</Button>}
       </RetroTitle>
       <Paper sx={{ p: { xs: 2, md: 3 } }}>
         {meetings.length === 0 && <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>📭 열린 모임이 없습니더. 첫 모임을 만들어 보이소!</Box>}

@@ -13,11 +13,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import RetroHeader from '../components/common/retro-header.jsx';
+import { useAuth } from '../hooks/use-auth.js';
 import { supabase } from '../lib/supabase.js';
 import { formatDate } from '../utils/format-date.js';
 
 const CATEGORIES = ['전체', '공지사항', '모임 모집', '작업 인증', '자유게시판'];
 const PAGE_SIZE = 10;
+/** 검색창·찾기·글쓰기 버튼의 높이를 맞추기 위한 값 (px) */
+const CONTROL_HEIGHT = 40;
 
 /**
  * 게시물 목록 페이지 (카테고리 필터 / 검색 / 페이지네이션 / 공지 상단 고정)
@@ -27,6 +30,7 @@ const PAGE_SIZE = 10;
  */
 function BoardPage() {
   const navigate = useNavigate();
+  const { isGuest } = useAuth();
   const [category, setCategory] = useState('전체');
   const [keyword, setKeyword] = useState('');
   const [query, setQuery] = useState('');
@@ -77,10 +81,17 @@ function BoardPage() {
 
       <Box sx={{ display: 'flex', gap: 1, mb: 2, flexWrap: 'wrap' }}>
         <Box component='form' onSubmit={handleSearch} sx={{ display: 'flex', gap: 1, flex: 1, minWidth: 220 }}>
-          <TextField size='small' fullWidth placeholder='🔍 제목으로 찾기 (예: 정모, 번개)' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-          <Button type='submit' variant='outlined'>찾기 ▶</Button>
+          <TextField
+            size='small'
+            fullWidth
+            placeholder='🔍 제목으로 찾기 (예: 정모, 번개)'
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            sx={{ '& .MuiInputBase-root': { height: CONTROL_HEIGHT } }}
+          />
+          <Button type='submit' variant='outlined' sx={{ height: CONTROL_HEIGHT }}>찾기</Button>
         </Box>
-        <Button variant='contained' onClick={() => navigate('/write')}>✎ 글쓰기</Button>
+        {!isGuest && <Button variant='contained' onClick={() => navigate('/write')} sx={{ height: CONTROL_HEIGHT }}>✎ 글쓰기</Button>}
       </Box>
 
       <Paper sx={{ overflowX: 'auto' }}>

@@ -12,7 +12,7 @@ import RetroNav from './retro-nav.jsx';
  * <RetroHeader />
  */
 function RetroHeader() {
-  const { profile, signOut } = useAuth();
+  const { profile, guest, signOut } = useAuth();
   const online = useOnlineCount();
 
   return (
@@ -37,6 +37,7 @@ function RetroHeader() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontSize: '0.9rem' }}>
         <Box component='span'>📞 접속 중 {String(online).padStart(2, '0')}명</Box>
         {profile && <Box component='span' sx={{ color: 'primary.main' }}>{profile.nickname} 님 어서오이소~</Box>}
+        {guest && <Box component='span' sx={{ color: 'primary.main' }}>{guest.nickname} 님 (비회원) 어서오이소~</Box>}
         <Button size='small' variant='outlined' onClick={signOut}>접속 종료 ✕</Button>
       </Box>
       <Box sx={{ flexBasis: '100%' }}>

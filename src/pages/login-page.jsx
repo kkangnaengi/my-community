@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import GuestEntryForm from '../components/common/guest-entry-form.jsx';
 import { useOnlineCount } from '../hooks/use-online-count.js';
 import { supabase } from '../lib/supabase.js';
 
@@ -18,6 +19,7 @@ const DEFAULT_NOTICE = '이번 주 토요일 정기 모임이 있습니더!';
 function LoginPage() {
   const online = useOnlineCount();
   const [isSignup, setIsSignup] = useState(false);
+  const [isGuestMode, setIsGuestMode] = useState(false);
   const [form, setForm] = useState({ email: '', password: '', nickname: '', pager: '' });
   const [notice, setNotice] = useState(DEFAULT_NOTICE);
   const [message, setMessage] = useState(null);
@@ -72,6 +74,9 @@ function LoginPage() {
           <Box>▶ ID와 비밀번호를 넣고 [접속하기]를 눌러 주이소!</Box>
         </Box>
 
+        {isGuestMode ? (
+          <GuestEntryForm onCancel={() => setIsGuestMode(false)} />
+        ) : (
         <Box component='form' onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
           <TextField label='회원 ID (이메일)' type='email' size='small' required value={form.email} onChange={handleChange('email')} />
           <TextField label='비밀번호' type='password' size='small' required slotProps={{ htmlInput: { minLength: 6 } }} value={form.password} onChange={handleChange('password')} />
@@ -88,7 +93,11 @@ function LoginPage() {
           <Button variant='outlined' color='secondary' onClick={() => { setIsSignup((v) => !v); setMessage(null); }}>
             {isSignup ? '◀ 접속 화면으로' : '신규 회원 가입하기 (무료!)'}
           </Button>
+          <Button variant='outlined' onClick={() => { setIsGuestMode(true); setMessage(null); }}>
+            👤 비회원으로 입장하기 (방명록만 쓸 수 있어요)
+          </Button>
         </Box>
+        )}
       </Paper>
     </Box>
   );

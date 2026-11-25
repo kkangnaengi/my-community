@@ -2,24 +2,21 @@ import { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import RetroHeader from '../components/common/retro-header.jsx';
-import RetroTitle from '../components/common/retro-title.jsx';
-import WorkLogForm from '../components/work-log/work-log-form.jsx';
-import { useAuth } from '../hooks/use-auth.js';
-import { supabase } from '../lib/supabase.js';
+import WorkLogForm from '../work-log/work-log-form.jsx';
+import { useAuth } from '../../hooks/use-auth.js';
+import { supabase } from '../../lib/supabase.js';
 
 /** 분을 'N시간 M분' 으로 변환 */
 const toHourText = (minutes) => `${Math.floor(minutes / 60)}시간 ${minutes % 60}분`;
 
 /**
- * 내 작업일지 페이지 (/work-logs) - 나만 볼 수 있는 일지
+ * 마이페이지 - 작업일지 탭 내용 (나만 볼 수 있는 일지)
  *
  * Example usage:
- * <WorkLogPage />
+ * <WorkLogPanel />
  */
-function WorkLogPage() {
+function WorkLogPanel() {
   const { profile } = useAuth();
   const [logs, setLogs] = useState([]);
   const [editing, setEditing] = useState(null);
@@ -57,13 +54,12 @@ function WorkLogPage() {
   const monthMinutes = logs.filter((l) => l.work_date.startsWith(thisMonth)).reduce((sum, l) => sum + (l.work_minutes ?? 0), 0);
 
   return (
-    <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
-      <RetroHeader />
-      <RetroTitle title='내 작업일지'>
+    <Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+        <Box sx={{ color: 'primary.main' }}>
+          ▶ 이번 달 작업 시간: {toHourText(monthMinutes)} ({logs.length}개 기록) · 🔒 나만 볼 수 있어예!
+        </Box>
         {!isFormOpen && <Button variant='contained' onClick={() => setIsFormOpen(true)}>💾 오늘 작업 저장</Button>}
-      </RetroTitle>
-      <Box sx={{ color: 'primary.main', borderTop: '1px dashed', borderBottom: '1px dashed', borderColor: 'divider', py: 1, mb: 2 }}>
-        ▶ 이번 달 작업 시간: {toHourText(monthMinutes)} ({logs.length}개 기록) · 🔒 이 일지는 나만 볼 수 있어예!
       </Box>
       {isFormOpen && <WorkLogForm key={editing?.id ?? 'new'} log={editing} onSaved={() => { closeForm(); load(); }} onCancel={closeForm} />}
       <Paper sx={{ p: { xs: 2, md: 3 } }}>
@@ -86,8 +82,8 @@ function WorkLogPage() {
           </Box>
         ))}
       </Paper>
-    </Container>
+    </Box>
   );
 }
 
-export default WorkLogPage;
+export default WorkLogPanel;

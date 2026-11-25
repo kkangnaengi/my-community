@@ -9,9 +9,8 @@ const MENUS = [
   { label: '📋 게시판', to: '/' },
   { label: '📅 모임', to: '/meetings' },
   { label: '📷 사진첩', to: '/photos' },
-  { label: '💾 작업일지', to: '/work-logs' },
   { label: '👑 명예의전당', to: '/hall-of-fame' },
-  { label: '⭐ 북마크', to: '/bookmarks' },
+  { label: '📖 방명록', to: '/guestbook' },
 ];
 
 /**
@@ -21,7 +20,7 @@ const MENUS = [
  * <RetroNav />
  */
 function RetroNav() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, isGuest } = useAuth();
   const unread = useUnreadCount();
 
   const renderButton = (menu, badge = 0) => (
@@ -62,7 +61,7 @@ function RetroNav() {
       }}
     >
       {MENUS.map((menu) => renderButton(menu))}
-      {renderButton({ label: '📟 알림', to: '/notifications' }, unread)}
+      {!isGuest && renderButton({ label: '👤 마이페이지', to: '/mypage' }, unread)}
       {isAdmin && renderButton({ label: '🚨 신고관리', to: '/admin/reports' })}
     </Box>
   );

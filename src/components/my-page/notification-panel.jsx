@@ -2,12 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import RetroHeader from '../components/common/retro-header.jsx';
-import RetroTitle from '../components/common/retro-title.jsx';
-import { supabase } from '../lib/supabase.js';
-import { formatDate } from '../utils/format-date.js';
+import { supabase } from '../../lib/supabase.js';
+import { formatDate } from '../../utils/format-date.js';
 
 const ICONS = { 댓글: '💬', 답글: '↳', 모임: '📅', 투표: '🗳', 기타: '📟' };
 
@@ -15,12 +12,12 @@ const ICONS = { 댓글: '💬', 답글: '↳', 모임: '📅', 투표: '🗳', �
 const notifyChanged = () => window.dispatchEvent(new Event('notifications-changed'));
 
 /**
- * 알림(삐삐함) 페이지 (/notifications)
+ * 마이페이지 - 삐삐함(알림) 탭 내용
  *
  * Example usage:
- * <NotificationPage />
+ * <NotificationPanel />
  */
-function NotificationPage() {
+function NotificationPanel() {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
 
@@ -61,11 +58,10 @@ function NotificationPage() {
   };
 
   return (
-    <Container maxWidth='md' sx={{ py: { xs: 2, md: 4 }, px: { xs: 2, md: 3 } }}>
-      <RetroHeader />
-      <RetroTitle title='삐삐함'>
+    <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <Button variant='outlined' onClick={readAll}>모두 읽음 ✔</Button>
-      </RetroTitle>
+      </Box>
       <Paper sx={{ p: { xs: 2, md: 3 } }}>
         {items.length === 0 && <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>📭 삐삐가 한 통도 안 왔어예~</Box>}
         {items.map((item) => (
@@ -81,8 +77,8 @@ function NotificationPage() {
           </Box>
         ))}
       </Paper>
-    </Container>
+    </Box>
   );
 }
 
-export default NotificationPage;
+export default NotificationPanel;
