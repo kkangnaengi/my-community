@@ -121,12 +121,12 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
             helperText={`${form.content.length} / 1000`} slotProps={{ htmlInput: { maxLength: 1000 } }}
           />
 
-          <TextField select size='small' label='🏠 사는 곳 - 시/도 (선택)' value={form.region} onChange={handleChange('region')}>
-            <MenuItem value=''>안 밝힐래예</MenuItem>
+          <TextField select size='small' label='어디 사시는 분이세예? (선택)' value={form.region} onChange={handleChange('region')}>
+            <MenuItem value=''>🤫 비밀~ (안 밝힐래예)</MenuItem>
             {REGIONS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
           </TextField>
-          <TextField select size='small' label='🎂 나이대 (선택)' value={form.ageGroup} onChange={handleChange('ageGroup')}>
-            <MenuItem value=''>안 밝힐래예</MenuItem>
+          <TextField select size='small' label='몇 살쯤 되시는교? (선택)' value={form.ageGroup} onChange={handleChange('ageGroup')}>
+            <MenuItem value=''>🤫 비밀~ (안 밝힐래예)</MenuItem>
             {AGE_GROUPS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
           </TextField>
 

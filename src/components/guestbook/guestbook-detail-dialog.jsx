@@ -119,10 +119,9 @@ function GuestbookDetailDialog({ memo, onClose, onChanged }) {
         <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#000070' }}>
           🏠 {memo.meeting?.title ?? getNoMeetingPhrase(memo.id)}
         </Box>
-        {info?.is_hidden && <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#555555' }}>🤫 사는 곳·나이대: 비밀~ (본인만 알아예)</Box>}
-        {(info?.region || info?.age_group) && (
+        {info && (
           <Box sx={{ fontSize: '0.9rem', mb: 1.5, color: '#555555' }}>
-            {info.region ? `🏠 사는 곳: ${info.region}` : ''}{info.region && info.age_group ? ' · ' : ''}{info.age_group ? `🎂 나이대: ${info.age_group}` : ''}
+            🏠 사는 곳: {info.region ?? '🤫 비밀~'} · 🎂 나이대: {info.age_group ?? '🤫 비밀~'}
           </Box>
         )}
 
