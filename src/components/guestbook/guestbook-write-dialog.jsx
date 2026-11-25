@@ -22,7 +22,6 @@ const makeEmptyForm = (guest) => ({
   password: '',
   region: '',
   ageGroup: '',
-  isHideInfo: false,
 });
 
 /**
@@ -72,7 +71,6 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
     const extra = {
       p_region: form.region === '' ? null : form.region,
       p_age_group: form.ageGroup === '' ? null : form.ageGroup,
-      p_hide_info: form.isHideInfo,
     };
     const { error } = profile
       ? await supabase.rpc('create_guestbook', {
@@ -99,8 +97,6 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
     handleClose();
     onCreated();
   };
-
-  const hasInfo = form.region !== '' || form.ageGroup !== '';
 
   return (
     <Dialog
@@ -133,11 +129,6 @@ function GuestbookWriteDialog({ isOpen, onClose, onCreated }) {
             <MenuItem value=''>안 밝힐래예</MenuItem>
             {AGE_GROUPS.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
           </TextField>
-          <FormControlLabel
-            disabled={!hasInfo}
-            control={<Checkbox checked={form.isHideInfo} onChange={(e) => setForm((prev) => ({ ...prev, isHideInfo: e.target.checked }))} />}
-            label='🤫 비밀~ (적어는 두되 방명록에는 숨길래예)'
-          />
 
           {profile ? (
             <FormControlLabel
